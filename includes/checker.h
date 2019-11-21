@@ -25,6 +25,7 @@ struct			s_qnode {
 struct			s_queue {
 	struct s_qnode	*first;
 	struct s_qnode	*last;
+	unsigned		size;
 };
 
 struct			s_snode {
@@ -34,12 +35,17 @@ struct			s_snode {
 
 struct			s_stack {
 	struct s_snode	*top;
+	unsigned		size;
 };
+
+typedef	void	t_op_function(struct s_stack *a, struct s_stack *b);
 
 struct			s_checker {
 	struct s_stack	*a;
 	struct s_stack	*b;
 	struct s_queue	*ins;
+	t_op_function	*op_func_array[11];
+	char			*ops_array[11];
 };
 
 struct s_queue	*initq();
@@ -53,5 +59,20 @@ int				*pop(struct s_stack *stack);
 int				push(struct s_stack *stack, int *content);
 int				*peeks(struct s_stack *stack);
 void			prints(struct s_stack *stack, char *name);
+
+void			sa(struct s_stack *a, struct s_stack *b);
+void			sb(struct s_stack *a, struct s_stack *b);
+void			ss(struct s_stack *a, struct s_stack *b);
+void			pa(struct s_stack *a, struct s_stack *b);
+void			pb(struct s_stack *a, struct s_stack *b);
+void			ra(struct s_stack *a, struct s_stack *b);
+void			rb(struct s_stack *a, struct s_stack *b);
+void			rr(struct s_stack *a, struct s_stack *b);
+void			rra(struct s_stack *a, struct s_stack *b);
+void			rrb(struct s_stack *a, struct s_stack *b);
+void			rrr(struct s_stack *a, struct s_stack *b);
+
+int				dispatch (struct s_checker *c_s);
+void			init_const_array(struct s_checker *c_s);
 
 #endif

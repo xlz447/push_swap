@@ -21,6 +21,7 @@ struct s_stack	*inits(void)
 	if (NULL == (out = malloc(sizeof(struct s_stack))))
 		return (NULL);
 	out->top = NULL;
+	out->size = 0;
 	return (out);
 }
 
@@ -37,6 +38,7 @@ int				*pop(struct s_stack *stack)
 		stack->top = stack->top->next;
 		out = tmp->content;
 		free(tmp);
+		stack->size--;
 		return (out);
 	}
 }
@@ -59,6 +61,7 @@ int				push(struct s_stack *stack, int *content)
 	new->content = content;
 	new->next = stack->top;
 	stack->top = new;
+	stack->size++;
 	return (0);
 }
 
@@ -72,21 +75,21 @@ int				*peeks(struct s_stack *stack)
 
 void			prints(struct s_stack *stack, char *name)
 {
-	struct s_stack	*tmp;
+	struct s_snode	*tmp;
 	int				flag;
 
 	flag = 1;
-	tmp = stack;
-	while (tmp->top)
+	tmp = stack->top;
+	while (tmp)
 	{
 		if (flag == 1)
 		{
-			printf("%s %d", name, *tmp->top->content);
+			printf("%s %d", name, *tmp->content);
 			flag = 0;
 		}
 		else
-			printf(" %d", *tmp->top->content);
-		tmp->top = tmp->top->next;
+			printf(" %d", *tmp->content);
+		tmp = tmp->next;
 	}
 	printf("\n");
 }

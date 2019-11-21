@@ -49,6 +49,7 @@ static struct s_checker	*initchecker(int ac, char **av, int *err)
 
 	if (NULL == (out = malloc(sizeof(struct s_checker))))
 		return (NULL);
+	init_const_array(out);
 	out->a = inits();
 	out->b = inits();
 	out->ins = initq();
@@ -101,18 +102,16 @@ static int				readins(struct s_checker *c_s)
 	char	*line;
 	int		rtn;
 
-	while((rtn = get_next_line(0, &line)) > 0)
+	while ((rtn = get_next_line(0, &line)) > 0)
 	{
-		if(enqueue(c_s->ins, line) < -1)
+		if (enqueue(c_s->ins, line) < -1)
 		{
 			if (line)
 				free(line);
-			return -1;
+			return (-1);
 		}
-		if (line)
-			free(line);
 	}
-	return rtn;
+	return (rtn);
 }
 
 int						main(int ac, char **av)
@@ -122,9 +121,7 @@ int						main(int ac, char **av)
 
 	if (ac < 2 && (err = 1))
 		exit(0);
-	if (!(c_s = initchecker(ac, av, &err)) || err == -1 || (readins(c_s) < 0))
+	if (!(c_s = initchecker(ac, av, &err)) || err == -1 || (readins(c_s) < 0) || (dispatch(c_s) < 0))
 		clearrss(c_s);
-	prints(c_s->a, "stack a:");
-	prints(c_s->b, "stack b:");
 	return (0);
 }

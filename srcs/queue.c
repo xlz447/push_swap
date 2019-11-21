@@ -21,6 +21,7 @@ struct s_queue	*initq(void)
 		return (NULL);
 	out->first = NULL;
 	out->last = NULL;
+	out->size = 0;
 	return (out);
 }
 
@@ -42,6 +43,7 @@ int				enqueue(struct s_queue *queue, char *content)
 		queue->last->next = add;
 		queue->last = add;
 	}
+	queue->size++;
 	return (0);
 }
 
@@ -64,6 +66,7 @@ char			*dequeue(struct s_queue *queue)
 	tmp = queue->first;
 	queue->first = queue->first->next;
 	free(tmp);
+	queue->size--;
 	return (out);
 }
 
