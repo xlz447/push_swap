@@ -12,7 +12,68 @@
 
 #include "checker.h"
 
-void		init_const_array(struct s_checker *c_s)
+int			check_resault(struct s_checker *c_s)
+{
+	if (c_s->b->size != 0)
+		return (ft_printf("KO\n"));
+	while (c_s->a->top->next)
+	{
+		if (*c_s->a->top->content < *c_s->a->top->next->content)
+			c_s->a->top = c_s->a->top->next;
+		else
+			return (ft_printf("KO\n"));
+	}
+	return (ft_printf("OK\n"));
+}
+
+void		check_arg_flag(struct s_checker *c_s, char **av, int *i)
+{
+	int ref;
+
+	while ((*i) > 0)
+	{
+		ref = *i;
+		if (ft_strequ(av[*i], "-v"))
+		{
+			c_s->vflag = 1;
+			(*i)--;
+		}
+		if (ft_strequ(av[*i], "-c"))
+		{
+			c_s->cflag = 1;
+			(*i)--;
+		}
+		if (ref == *i)
+			break ;
+	}
+}
+
+void		print_color(int c, struct s_snode *an, struct s_snode *bn,
+						char *a, char *b)
+{
+	if (c)
+	{
+		if (an && an->delta)
+			ft_printf("{cyan}%*s{noc}", (ft_strlen(a) + 11) / 2, a);
+		else
+			ft_printf("%*s", (ft_strlen(a) + 11) / 2, a);
+		if (bn && bn->delta)
+			ft_printf("{cyan}%*s\n{noc}",
+				12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
+		else
+			ft_printf("%*s\n",
+				12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
+	}
+	else
+		ft_printf("%*s%*s\n", (ft_strlen(a) + 11) / 2, a,
+			12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
+	if (an)
+		an->delta = 0;
+	if (bn)
+		bn->delta = 0;
+}
+
+static void	init_const_array(struct s_checker *c_s)
 {
 	c_s->op_func_array[0] = &sa;
 	c_s->op_func_array[1] = &sb;
@@ -38,11 +99,12 @@ void		init_const_array(struct s_checker *c_s)
 	c_s->ops_array[10] = "rrr";
 }
 
-int			dispatch(struct s_checker *c_s)
+int			dispatch_checker(struct s_checker *c_s)
 {
 	int		i;
 	char	*tmp;
 
+	init_const_array(c_s);
 	while (peekq(c_s->ins))
 	{
 		i = -1;
@@ -58,8 +120,8 @@ int			dispatch(struct s_checker *c_s)
 			return (-1);
 		tmp = dequeue(c_s->ins);
 		free(tmp);
-		prints(c_s->a, "stack a:");
-		prints(c_s->b, "stack b:");
+		if (c_s->vflag == 1)
+			prints(c_s);
 	}
 	return (0);
 }

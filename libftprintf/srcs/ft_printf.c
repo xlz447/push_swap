@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free_2d.c                                       :+:      :+:    :+:   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/07/30 23:52:41 by xzhu              #+#    #+#             */
-/*   Updated: 2018/07/30 23:53:00 by xzhu             ###   ########.fr       */
+/*   Created: 2018/07/29 22:37:25 by xzhu              #+#    #+#             */
+/*   Updated: 2018/07/29 22:37:27 by xzhu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void		ft_free_2d(void **to_free)
+int	ft_printf(const char *format, ...)
 {
-	int i;
+	t_pf	p;
+	va_list	ap[2];
+	int		out;
 
-	i = -1;
-	while (to_free[++i])
-		free(to_free[i]);
-	free(to_free);
+	ft_bzero(&p, sizeof(p));
+	va_start(ap[0], format);
+	va_copy(ap[1], ap[0]);
+	out = dispatch(&p, (char*)format, ap, 1);
+	va_end(ap[0]);
+	va_end(ap[1]);
+	return (out);
 }

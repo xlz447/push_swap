@@ -50,13 +50,13 @@ static int	dedicated_norm_helper(char **data, char **line, int rd, int fd)
 int			get_next_line(const int fd, char **line)
 {
 	static char	*data[FD_SIZE];
-	char		buff[BUFF_SIZE + 1];
+	char		buff[GNL_BUFF_SIZE + 1];
 	int			rd;
 	char		*temp;
 
 	if (fd < 0 || !line)
 		return (-1);
-	while ((rd = read(fd, buff, BUFF_SIZE)) > 0)
+	while ((rd = read(fd, buff, GNL_BUFF_SIZE)) > 0)
 	{
 		buff[rd] = '\0';
 		if (!data[fd])

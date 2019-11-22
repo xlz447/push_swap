@@ -19,12 +19,12 @@ BLUE		=	\033[0;34m
 RED			=	\033[0;31m
 
 CC			=	gcc
-CC_FLAGS	=	-Wall -Wextra #-Werror
+CC_FLAGS	=	-Wall -Wextra -Werror -g
 
 SRC_PATH	=	./srcs/
 INC_PATH	=	./includes/
 OBJ_PATH	=	./obj/
-LFT_PATH	=	./libft/
+LFT_PATH	=	./libftprintf/
 
 P_SRC		=	$(addprefix $(SRC_PATH),$(P_SRC_NAME))
 C_SRC		=	$(addprefix $(SRC_PATH),$(C_SRC_NAME))
@@ -44,11 +44,11 @@ all:
 	@make $(C_NAME)
 
 $(P_NAME): $(P_OBJ)
-	@$(CC) -o $(P_NAME) $(P_OBJ) -L $(LFT_PATH) -lft
+	@$(CC) -o $(P_NAME) $(P_OBJ) -L $(LFT_PATH) -lftprintf
 	@echo "$(GREEN)PUSH_SWAP ✓ Push_swap ready$(NOC)"
 
 $(C_NAME): $(C_OBJ)
-	@$(CC) -o $(C_NAME) $(C_OBJ) -L $(LFT_PATH) -lft
+	@$(CC) -o $(C_NAME) $(C_OBJ) -L $(LFT_PATH) -lftprintf
 	@echo "$(GREEN)CHECKER   ✓ Checker   ready$(NOC)"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c

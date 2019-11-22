@@ -60,6 +60,7 @@ int				push(struct s_stack *stack, int *content)
 		return (-1);
 	new->content = content;
 	new->next = stack->top;
+	new->delta = 0;
 	stack->top = new;
 	stack->size++;
 	return (0);
@@ -73,23 +74,25 @@ int				*peeks(struct s_stack *stack)
 		return (stack->top->content);
 }
 
-void			prints(struct s_stack *stack, char *name)
+void			prints(struct s_checker *c_s)
 {
-	struct s_snode	*tmp;
-	int				flag;
+	struct s_snode	*tmp1;
+	struct s_snode	*tmp2;
+	char			*a;
+	char			*b;
 
-	flag = 1;
-	tmp = stack->top;
-	while (tmp)
+	tmp1 = c_s->a->top;
+	tmp2 = c_s->b->top;
+	ft_printf("***********************\n");
+	while (tmp1 || tmp2)
 	{
-		if (flag == 1)
-		{
-			printf("%s %d", name, *tmp->content);
-			flag = 0;
-		}
-		else
-			printf(" %d", *tmp->content);
-		tmp = tmp->next;
+		a = (tmp1) ? ft_itoa(*tmp1->content) : ft_strnew(0);
+		b = (tmp2) ? ft_itoa(*tmp2->content) : ft_strnew(0);
+		print_color(c_s->cflag, tmp1, tmp2, a, b);
+		free(a);
+		free(b);
+		tmp1 = (tmp1) ? tmp1->next : tmp1;
+		tmp2 = (tmp2) ? tmp2->next : tmp2;
 	}
-	printf("\n");
+	ft_printf("----------- -----------\n     a           b     \n");
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ops_1.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: xzhu <marvin@42.fr>                        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2019/11/21 19:24:24 by xzhu              #+#    #+#             */
+/*   Updated: 2019/11/21 19:24:37 by xzhu             ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "checker.h"
 
 void			sa(struct s_stack *a, struct s_stack *b)
@@ -9,8 +21,10 @@ void			sa(struct s_stack *a, struct s_stack *b)
 		tmp = a->top->content;
 		a->top->content = a->top->next->content;
 		a->top->next->content = tmp;
+		a->top->delta = 1;
+		a->top->next->delta = 1;
 	}
-	printf("calling %s\n", __func__);
+	(void)b;
 }
 
 void			sb(struct s_stack *a, struct s_stack *b)
@@ -22,27 +36,32 @@ void			sb(struct s_stack *a, struct s_stack *b)
 		tmp = b->top->content;
 		b->top->content = b->top->next->content;
 		b->top->next->content = tmp;
+		b->top->delta = 1;
+		b->top->next->delta = 1;
 	}
-	printf("calling %s\n", __func__);
+	(void)a;
 }
 
 void			ss(struct s_stack *a, struct s_stack *b)
 {
 	sa(a, b);
 	sb(a, b);
-	printf("calling %s\n", __func__);
 }
 
 void			pa(struct s_stack *a, struct s_stack *b)
 {
 	if (b->size)
+	{
 		push(a, pop(b));
-	printf("calling %s\n", __func__);
+		a->top->delta = 1;
+	}
 }
 
 void			pb(struct s_stack *a, struct s_stack *b)
 {
 	if (a->size)
+	{
 		push(b, pop(a));
-	printf("calling %s\n", __func__);
+		b->top->delta = 1;
+	}
 }

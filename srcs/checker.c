@@ -49,28 +49,27 @@ static struct s_checker	*initchecker(int ac, char **av, int *err)
 
 	if (NULL == (out = malloc(sizeof(struct s_checker))))
 		return (NULL);
-	init_const_array(out);
 	out->a = inits();
 	out->b = inits();
 	out->ins = initq();
+	out->vflag = 0;
+	out->cflag = 0;
 	i = ac - 1;
 	while (i > 0)
 	{
-		if (NULL == (n = malloc(sizeof(int))))
-			*err = -1;
-		if (*err == -1)
+		if (NULL == (n = malloc(sizeof(int))) && (*err = -1))
 			break ;
+		check_arg_flag(out, av, &i);
 		*n = atoicheck(av[i--], err);
 		if (*err == -1)
 			break ;
-		*err = push(out->a, n);
-		if (*err == -1)
+		if ((*err = push(out->a, n)) == -1)
 			break ;
 	}
 	return (out);
 }
 
-static void				clearrss(struct s_checker *c_s)
+static void				clearrss_exit(struct s_checker *c_s, int exit)
 {
 	if (c_s)
 	{
@@ -94,7 +93,8 @@ static void				clearrss(struct s_checker *c_s)
 		}
 		free(c_s);
 	}
-	ft_errorexit("Error");
+	if (exit)
+		ft_errorexit("Error");
 }
 
 static int				readins(struct s_checker *c_s)
@@ -121,7 +121,10 @@ int						main(int ac, char **av)
 
 	if (ac < 2 && (err = 1))
 		exit(0);
-	if (!(c_s = initchecker(ac, av, &err)) || err == -1 || (readins(c_s) < 0) || (dispatch(c_s) < 0))
-		clearrss(c_s);
+	if (!(c_s = initchecker(ac, av, &err)) || err == -1 ||
+		(readins(c_s) < 0) || (dispatch_checker(c_s) < 0))
+		clearrss_exit(c_s, 1);
+	check_resault(c_s);
+	clearrss_exit(c_s, 0);
 	return (0);
 }

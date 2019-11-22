@@ -15,6 +15,7 @@
 
 # include <stdio.h>
 # include "libft.h"
+# include "ft_printf.h"
 # include "get_next_line.h"
 
 struct			s_qnode {
@@ -30,6 +31,7 @@ struct			s_queue {
 
 struct			s_snode {
 	int				*content;
+	int				delta;
 	struct s_snode	*next;
 };
 
@@ -44,6 +46,8 @@ struct			s_checker {
 	struct s_stack	*a;
 	struct s_stack	*b;
 	struct s_queue	*ins;
+	int				vflag;
+	int				cflag;
 	t_op_function	*op_func_array[11];
 	char			*ops_array[11];
 };
@@ -58,7 +62,7 @@ struct s_stack	*inits();
 int				*pop(struct s_stack *stack);
 int				push(struct s_stack *stack, int *content);
 int				*peeks(struct s_stack *stack);
-void			prints(struct s_stack *stack, char *name);
+void			prints(struct s_checker *c_s);
 
 void			sa(struct s_stack *a, struct s_stack *b);
 void			sb(struct s_stack *a, struct s_stack *b);
@@ -72,7 +76,9 @@ void			rra(struct s_stack *a, struct s_stack *b);
 void			rrb(struct s_stack *a, struct s_stack *b);
 void			rrr(struct s_stack *a, struct s_stack *b);
 
-int				dispatch (struct s_checker *c_s);
-void			init_const_array(struct s_checker *c_s);
-
+int				dispatch_checker(struct s_checker *c_s);
+int				check_resault(struct s_checker *c_s);
+void			check_arg_flag(struct s_checker *c_s, char **av, int *i);
+void			print_color(int c, struct s_snode *a, struct s_snode *b,
+					char *as, char *bs);
 #endif
