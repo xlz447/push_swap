@@ -78,19 +78,17 @@ void			prints(struct s_checker *c_s)
 {
 	struct s_snode	*tmp1;
 	struct s_snode	*tmp2;
-	char			*a;
-	char			*b;
 
 	tmp1 = c_s->a->top;
 	tmp2 = c_s->b->top;
 	ft_printf("***********************\n");
 	while (tmp1 || tmp2)
 	{
-		a = (tmp1) ? ft_itoa(*tmp1->content) : ft_strnew(0);
-		b = (tmp2) ? ft_itoa(*tmp2->content) : ft_strnew(0);
-		print_color(c_s->cflag, tmp1, tmp2, a, b);
-		free(a);
-		free(b);
+		print_color(c_s->cflag, tmp1, tmp2);
+		if (tmp1)
+			tmp1->delta = 0;
+		if (tmp2)
+			tmp2->delta = 0;
 		tmp1 = (tmp1) ? tmp1->next : tmp1;
 		tmp2 = (tmp2) ? tmp2->next : tmp2;
 	}

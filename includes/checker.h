@@ -79,6 +79,5 @@ void			rrr(struct s_stack *a, struct s_stack *b);
 int				dispatch_checker(struct s_checker *c_s);
 int				check_resault(struct s_checker *c_s);
 void			check_arg_flag(struct s_checker *c_s, char **av, int *i);
-void			print_color(int c, struct s_snode *a, struct s_snode *b,
-					char *as, char *bs);
+void			print_color(int c, struct s_snode *a, struct s_snode *b);
 #endif

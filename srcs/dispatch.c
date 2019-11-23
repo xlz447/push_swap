@@ -48,9 +48,13 @@ void		check_arg_flag(struct s_checker *c_s, char **av, int *i)
 	}
 }
 
-void		print_color(int c, struct s_snode *an, struct s_snode *bn,
-						char *a, char *b)
+void		print_color(int c, struct s_snode *an, struct s_snode *bn)
 {
+	char			*a;
+	char			*b;
+
+	a = (an) ? ft_itoa(*an->content) : ft_strnew(0);
+	b = (bn) ? ft_itoa(*bn->content) : ft_strnew(0);
 	if (c)
 	{
 		if (an && an->delta)
@@ -67,10 +71,8 @@ void		print_color(int c, struct s_snode *an, struct s_snode *bn,
 	else
 		ft_printf("%*s%*s\n", (ft_strlen(a) + 11) / 2, a,
 			12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
-	if (an)
-		an->delta = 0;
-	if (bn)
-		bn->delta = 0;
+	free(a);
+	free(b);
 }
 
 static void	init_const_array(struct s_checker *c_s)

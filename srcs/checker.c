@@ -57,8 +57,8 @@ static struct s_checker	*initchecker(int ac, char **av, int *err)
 	i = ac - 1;
 	while (i > 0)
 	{
-		if (NULL == (n = malloc(sizeof(int))) && (*err = -1))
-			break ;
+		if (NULL == (n = malloc(sizeof(int))))
+			return (NULL);
 		check_arg_flag(out, av, &i);
 		*n = atoicheck(av[i--], err);
 		if (*err == -1)
