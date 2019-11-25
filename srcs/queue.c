@@ -77,9 +77,29 @@ char			*peekq(struct s_queue *queue)
 	return (queue->first->content);
 }
 
-int				isemptyq(struct s_queue *queue)
+void			print_color(int c, struct s_snode *an, struct s_snode *bn)
 {
-	if (!queue || !queue->first || !queue->last)
-		return (1);
-	return (0);
+	char			*a;
+	char			*b;
+
+	a = (an) ? ft_itoa(*an->content) : ft_strnew(0);
+	b = (bn) ? ft_itoa(*bn->content) : ft_strnew(0);
+	if (c)
+	{
+		if (an && an->delta)
+			ft_printf("{cyan}%*s{noc}", (ft_strlen(a) + 11) / 2, a);
+		else
+			ft_printf("%*s", (ft_strlen(a) + 11) / 2, a);
+		if (bn && bn->delta)
+			ft_printf("{cyan}%*s\n{noc}",
+				12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
+		else
+			ft_printf("%*s\n",
+				12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
+	}
+	else
+		ft_printf("%*s%*s\n", (ft_strlen(a) + 11) / 2, a,
+			12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
+	free(a);
+	free(b);
 }

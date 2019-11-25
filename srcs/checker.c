@@ -69,7 +69,7 @@ static struct s_checker	*initchecker(int ac, char **av, int *err)
 	return (out);
 }
 
-static void				clearrss_exit(struct s_checker *c_s, int exit)
+static void				clearc_exit(struct s_checker *c_s, int exit)
 {
 	if (c_s)
 	{
@@ -123,8 +123,8 @@ int						main(int ac, char **av)
 		exit(0);
 	if (!(c_s = initchecker(ac, av, &err)) || err == -1 ||
 		(readins(c_s) < 0) || (dispatch_checker(c_s) < 0))
-		clearrss_exit(c_s, 1);
+		clearc_exit(c_s, 1);
 	check_resault(c_s);
-	clearrss_exit(c_s, 0);
+	clearc_exit(c_s, 0);
 	return (0);
 }

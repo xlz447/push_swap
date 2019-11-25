@@ -48,33 +48,6 @@ void		check_arg_flag(struct s_checker *c_s, char **av, int *i)
 	}
 }
 
-void		print_color(int c, struct s_snode *an, struct s_snode *bn)
-{
-	char			*a;
-	char			*b;
-
-	a = (an) ? ft_itoa(*an->content) : ft_strnew(0);
-	b = (bn) ? ft_itoa(*bn->content) : ft_strnew(0);
-	if (c)
-	{
-		if (an && an->delta)
-			ft_printf("{cyan}%*s{noc}", (ft_strlen(a) + 11) / 2, a);
-		else
-			ft_printf("%*s", (ft_strlen(a) + 11) / 2, a);
-		if (bn && bn->delta)
-			ft_printf("{cyan}%*s\n{noc}",
-				12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
-		else
-			ft_printf("%*s\n",
-				12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
-	}
-	else
-		ft_printf("%*s%*s\n", (ft_strlen(a) + 11) / 2, a,
-			12 - ((ft_strlen(a) + 11) / 2) + (ft_strlen(b) + 11) / 2, b);
-	free(a);
-	free(b);
-}
-
 static void	init_const_array(struct s_checker *c_s)
 {
 	c_s->op_func_array[0] = &sa;
@@ -123,7 +96,7 @@ int			dispatch_checker(struct s_checker *c_s)
 		tmp = dequeue(c_s->ins);
 		free(tmp);
 		if (c_s->vflag == 1)
-			prints(c_s);
+			prints(c_s->cflag, c_s->a, c_s->b);
 	}
 	return (0);
 }

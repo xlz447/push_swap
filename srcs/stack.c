@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
-#include <stdio.h>
 #include "checker.h"
 
 struct s_stack	*inits(void)
@@ -74,17 +72,17 @@ int				*peeks(struct s_stack *stack)
 		return (stack->top->content);
 }
 
-void			prints(struct s_checker *c_s)
+void			prints(int c, struct s_stack *a, struct s_stack *b)
 {
 	struct s_snode	*tmp1;
 	struct s_snode	*tmp2;
 
-	tmp1 = c_s->a->top;
-	tmp2 = c_s->b->top;
+	tmp1 = a->top;
+	tmp2 = b->top;
 	ft_printf("***********************\n");
 	while (tmp1 || tmp2)
 	{
-		print_color(c_s->cflag, tmp1, tmp2);
+		print_color(c, tmp1, tmp2);
 		if (tmp1)
 			tmp1->delta = 0;
 		if (tmp2)

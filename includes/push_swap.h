@@ -14,4 +14,12 @@
 # define PUSH_SWAP_H
 
 # include "libft.h"
+# include "checker.h"
+
+struct			s_pushswap {
+	struct s_stack	*a;
+	struct s_stack	*b;
+	struct s_queue	*ins;
+};
+
 #endif

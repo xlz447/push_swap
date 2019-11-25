@@ -13,6 +13,7 @@
 #ifndef CHECKER_H
 # define CHECKER_H
 
+# include <stdlib.h>
 # include <stdio.h>
 # include "libft.h"
 # include "ft_printf.h"
@@ -56,13 +57,12 @@ struct s_queue	*initq();
 int				enqueue(struct s_queue *queue, char *content);
 char			*dequeue(struct s_queue *queue);
 char			*peekq(struct s_queue *queue);
-int				isemptyq(struct s_queue *queue);
 
 struct s_stack	*inits();
 int				*pop(struct s_stack *stack);
 int				push(struct s_stack *stack, int *content);
 int				*peeks(struct s_stack *stack);
-void			prints(struct s_checker *c_s);
+void			prints(int c, struct s_stack *a, struct s_stack *b);
 
 void			sa(struct s_stack *a, struct s_stack *b);
 void			sb(struct s_stack *a, struct s_stack *b);
