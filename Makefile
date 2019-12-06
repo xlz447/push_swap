@@ -35,8 +35,8 @@ INC			=	$(addprefix -I,$(INC_PATH))
 P_OBJ_NAME	=	$(P_SRC_NAME:.c=.o)
 C_OBJ_NAME	=	$(C_SRC_NAME:.c=.o)
 
-P_SRC_NAME	=	push_swap.c queue.c stack.c
-C_SRC_NAME	=	checker.c queue.c stack.c dispatch.c ops_1.c ops_2.c ops_3.c
+P_SRC_NAME	=	push_swap.c queue.c stack.c p_input.c print.c
+C_SRC_NAME	=	checker.c queue.c stack.c dispatch.c ops_1.c ops_2.c ops_3.c c_input.c print.c
 
 all:
 	@make -C $(LFT_PATH)

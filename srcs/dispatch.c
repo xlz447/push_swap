@@ -12,42 +12,6 @@
 
 #include "checker.h"
 
-int			check_resault(struct s_checker *c_s)
-{
-	if (c_s->b->size != 0)
-		return (ft_printf("KO\n"));
-	while (c_s->a->top->next)
-	{
-		if (*c_s->a->top->content < *c_s->a->top->next->content)
-			c_s->a->top = c_s->a->top->next;
-		else
-			return (ft_printf("KO\n"));
-	}
-	return (ft_printf("OK\n"));
-}
-
-void		check_arg_flag(struct s_checker *c_s, char **av, int *i)
-{
-	int ref;
-
-	while ((*i) > 0)
-	{
-		ref = *i;
-		if (ft_strequ(av[*i], "-v"))
-		{
-			c_s->vflag = 1;
-			(*i)--;
-		}
-		if (ft_strequ(av[*i], "-c"))
-		{
-			c_s->cflag = 1;
-			(*i)--;
-		}
-		if (ref == *i)
-			break ;
-	}
-}
-
 static void	init_const_array(struct s_checker *c_s)
 {
 	c_s->op_func_array[0] = &sa;
@@ -96,7 +60,7 @@ int			dispatch_checker(struct s_checker *c_s)
 		tmp = dequeue(c_s->ins);
 		free(tmp);
 		if (c_s->vflag == 1)
-			prints(c_s->cflag, c_s->a, c_s->b);
+			print_stack(c_s->cflag, c_s->a, c_s->b);
 	}
 	return (0);
 }

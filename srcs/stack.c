@@ -72,23 +72,16 @@ int				*peeks(struct s_stack *stack)
 		return (stack->top->content);
 }
 
-void			prints(int c, struct s_stack *a, struct s_stack *b)
+void			clear_stack(struct s_stack *stack)
 {
-	struct s_snode	*tmp1;
-	struct s_snode	*tmp2;
-
-	tmp1 = a->top;
-	tmp2 = b->top;
-	ft_printf("***********************\n");
-	while (tmp1 || tmp2)
+	void *tmp;
+	
+	if (!stack)
+		return ;
+	while (stack->top)
 	{
-		print_color(c, tmp1, tmp2);
-		if (tmp1)
-			tmp1->delta = 0;
-		if (tmp2)
-			tmp2->delta = 0;
-		tmp1 = (tmp1) ? tmp1->next : tmp1;
-		tmp2 = (tmp2) ? tmp2->next : tmp2;
+		tmp = (void*)pop(stack);
+		free(tmp);
 	}
-	ft_printf("----------- -----------\n     a           b     \n");
+	free(stack);
 }

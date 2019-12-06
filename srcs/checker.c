@@ -12,92 +12,40 @@
 
 #include "checker.h"
 
-static int				atoicheck(char *str, int *err)
-{
-	long long int	result;
-	int				negative;
-
-	result = 0;
-	negative = 1;
-	while (*str == '\t' || *str == '\n' || *str == '\v' ||
-		*str == '\f' || *str == '\r' || *str == ' ')
-		str++;
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			negative = -1;
-		str++;
-	}
-	if (*str == '\0')
-		return (*err = -1);
-	while (*str >= '0' && *str <= '9')
-	{
-		result = result * 10 + (*str - '0');
-		str++;
-	}
-	if ((*str != '\0') || (negative == 1 && result > 2147483647) ||
-		(negative == -1 && result > 2147483648))
-		return (*err = -1);
-	return (result * negative);
-}
-
-static struct s_checker	*initchecker(int ac, char **av, int *err)
-{
-	struct s_checker	*out;
-	int					i;
-	int					*n;
-
-	if (NULL == (out = malloc(sizeof(struct s_checker))))
-		return (NULL);
-	out->a = inits();
-	out->b = inits();
-	out->ins = initq();
-	out->vflag = 0;
-	out->cflag = 0;
-	i = ac - 1;
-	while (i > 0)
-	{
-		if (NULL == (n = malloc(sizeof(int))))
-			return (NULL);
-		check_arg_flag(out, av, &i);
-		*n = atoicheck(av[i--], err);
-		if (*err == -1)
-			break ;
-		if ((*err = push(out->a, n)) == -1)
-			break ;
-	}
-	return (out);
-}
-
-static void				clearc_exit(struct s_checker *c_s, int exit)
+static void		clearc_exit(struct s_checker *c_s, int exit)
 {
 	if (c_s)
 	{
 		if (c_s->a)
-		{
-			while (c_s->a->top)
-				pop(c_s->a);
-			free(c_s->a);
-		}
+			clear_stack(c_s->a);
 		if (c_s->b)
-		{
-			while (c_s->b->top)
-				pop(c_s->b);
-			free(c_s->b);
-		}
+			clear_stack(c_s->b);
 		if (c_s->ins)
-		{
-			while (c_s->ins->first)
-				dequeue(c_s->ins);
-			free(c_s->ins);
-		}
+			clear_queue(c_s->ins);
 		free(c_s);
 	}
 	if (exit)
 		ft_errorexit("Error");
 }
 
-static int				readins(struct s_checker *c_s)
+static int		check_result(struct s_checker *c_s)
+{
+	struct s_snode *tmp;
+
+	if (c_s->b->size != 0)
+		return (ft_printf("KO\n"));
+	tmp = c_s->a->top;
+	while (tmp->next)
+	{
+		if (*tmp->content < *tmp->next->content)
+			tmp = tmp->next;
+		else
+			return (ft_printf("KO\n"));
+	}
+	return (ft_printf("OK\n"));
+}
+
+static int		readins(struct s_checker *c_s)
 {
 	char	*line;
 	int		rtn;
@@ -114,7 +62,7 @@ static int				readins(struct s_checker *c_s)
 	return (rtn);
 }
 
-int						main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	struct s_checker	*c_s;
 	int					err;
@@ -124,7 +72,7 @@ int						main(int ac, char **av)
 	if (!(c_s = initchecker(ac, av, &err)) || err == -1 ||
 		(readins(c_s) < 0) || (dispatch_checker(c_s) < 0))
 		clearc_exit(c_s, 1);
-	check_resault(c_s);
+	check_result(c_s);
 	clearc_exit(c_s, 0);
 	return (0);
 }

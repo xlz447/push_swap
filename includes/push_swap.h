@@ -16,10 +16,12 @@
 # include "libft.h"
 # include "checker.h"
 
-struct			s_pushswap {
+struct				s_pushswap {
 	struct s_stack	*a;
 	struct s_stack	*b;
 	struct s_queue	*ins;
 };
+
+struct s_pushswap	*initpushswap(int ac, char **av, int *err);
 
 #endif

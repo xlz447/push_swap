@@ -95,6 +95,7 @@ LIBFTFILES =ft_putchar.c \
 			ft_lstat.c \
 			ft_errorexit.c \
 			ft_exit.c \
+			ft_free_2d.c \
 			get_next_line.c
 
 PRINTFSRCS	= $(addprefix srcs/, $(PRINTFFILES))
