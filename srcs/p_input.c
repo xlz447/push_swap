@@ -53,7 +53,7 @@ static char			**concat_input(int ac, char **av)
 	j = 0;
 	while (++i < ac)
 		j += ft_strlen(av[i]);
-	tmp = ft_strnew(j);
+	tmp = ft_strnew(j + ac - 2);
 	i = 0;
 	j = -1;
 	k = 0;
@@ -85,7 +85,7 @@ struct s_pushswap	*initpushswap(int ac, char **av, int *err)
 	i = 0;
 	while (av[i + 1])
 		i++;
-	while (i > 0)
+	while (i >= 0)
 	{
 		if (NULL == (n = malloc(sizeof(int))))
 			return (NULL);

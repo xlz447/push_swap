@@ -65,7 +65,6 @@ int					push(struct s_stack *stack, int *content);
 int					*peeks(struct s_stack *stack);
 void				clear_stack(struct s_stack *stack);
 
-
 void				sa(struct s_stack *a, struct s_stack *b);
 void				sb(struct s_stack *a, struct s_stack *b);
 void				ss(struct s_stack *a, struct s_stack *b);

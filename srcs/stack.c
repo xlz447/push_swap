@@ -74,8 +74,8 @@ int				*peeks(struct s_stack *stack)
 
 void			clear_stack(struct s_stack *stack)
 {
-	void *tmp;
-	
+	void	*tmp;
+
 	if (!stack)
 		return ;
 	while (stack->top)
