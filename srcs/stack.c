@@ -59,6 +59,8 @@ int				push(struct s_stack *stack, int *content)
 	new->content = content;
 	new->next = stack->top;
 	new->delta = 0;
+	new->index = -1;
+	new->group = -1;
 	stack->top = new;
 	stack->size++;
 	return (0);

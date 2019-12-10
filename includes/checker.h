@@ -33,6 +33,8 @@ struct				s_queue {
 struct				s_snode {
 	int				*content;
 	int				delta;
+	int				index;
+	int				group;
 	struct s_snode	*next;
 };
 

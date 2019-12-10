@@ -92,7 +92,7 @@ static char				**concat_input(int ac, char **av)
 	return (out);
 }
 
-static struct s_checker	*init_mem(void)
+static struct s_checker	*init_c_mem(void)
 {
 	struct s_checker	*out;
 
@@ -112,7 +112,7 @@ struct s_checker		*initchecker(int ac, char **av, int *err)
 	int					i;
 	int					*n;
 
-	if (NULL == (out = init_mem()))
+	if (NULL == (out = init_c_mem()))
 		return (NULL);
 	av = concat_input(ac, av);
 	i = 0;

@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static int			atoicheck(char *str, int *err)
+static int					atoicheck(char *str, int *err)
 {
 	long long int	result;
 	int				negative;
@@ -41,7 +41,7 @@ static int			atoicheck(char *str, int *err)
 	return (result * negative);
 }
 
-static char			**concat_input(int ac, char **av)
+static char					**concat_input(int ac, char **av)
 {
 	int		i;
 	int		j;
@@ -70,17 +70,27 @@ static char			**concat_input(int ac, char **av)
 	return (out);
 }
 
-struct s_pushswap	*initpushswap(int ac, char **av, int *err)
+static struct s_pushswap	*init_p_mem(void)
 {
 	struct s_pushswap	*out;
-	int					i;
-	int					*n;
 
 	if (NULL == (out = malloc(sizeof(struct s_pushswap))))
 		return (NULL);
 	out->a = inits();
 	out->b = inits();
 	out->ins = initq();
+	out->gsize = 0;
+	return (out);
+}
+
+struct s_pushswap			*initpushswap(int ac, char **av, int *err)
+{
+	struct s_pushswap	*out;
+	int					i;
+	int					*n;
+
+	if (NULL == (out = init_p_mem()))
+		return (NULL);
 	av = concat_input(ac, av);
 	i = 0;
 	while (av[i + 1])
