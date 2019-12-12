@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void					clearp_exit(struct s_pushswap *p_s, int exit)
+static void		clearp_exit(struct s_pushswap *p_s, int exit)
 {
 	if (p_s)
 	{
@@ -28,7 +28,7 @@ static void					clearp_exit(struct s_pushswap *p_s, int exit)
 		ft_errorexit("Error");
 }
 
-int							main(int ac, char **av)
+int				main(int ac, char **av)
 {
 	struct s_pushswap	*p_s;
 	int					err;
@@ -38,6 +38,8 @@ int							main(int ac, char **av)
 	if (!(p_s = initpushswap(ac, av, &err)) || err == -1)
 		clearp_exit(p_s, 1);
 	print_stack(1, p_s->a, p_s->b);
+	sort_update(p_s->a);
+	calc_group(p_s);
 	clearp_exit(p_s, 0);
 	return (0);
 }
