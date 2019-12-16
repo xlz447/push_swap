@@ -26,5 +26,6 @@ struct				s_pushswap {
 struct s_pushswap	*initpushswap(int ac, char **av, int *err);
 void				sort_update(struct s_stack *stack);
 void				calc_group(struct s_pushswap *ps);
+int					log_ceil(int n, int m);
 
 #endif

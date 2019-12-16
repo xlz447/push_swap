@@ -54,7 +54,7 @@ void			sort_update(struct s_stack *stack)
 	p_index(stack);
 }
 
-static int		log_ceil(int n, int m)
+int				log_ceil(int n, int m)
 {
 	int		log;
 	int		curr;
