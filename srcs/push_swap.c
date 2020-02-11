@@ -40,6 +40,9 @@ int				main(int ac, char **av)
 	print_stack(1, p_s->a, p_s->b);
 	sort_update(p_s->a);
 	calc_group(p_s);
-	clearp_exit(p_s, 0);
+	radix_sort(p_s);
+	// clearp_exit(p_s, 0);
+	print_stack(1, p_s->a, p_s->b);
+
 	return (0);
 }

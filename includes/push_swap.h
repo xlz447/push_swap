@@ -21,11 +21,15 @@ struct				s_pushswap {
 	struct s_stack	*b;
 	struct s_queue	*ins;
 	int				gsize;
+	char			**order;
+	t_op_function	*op_func_array[11];
+	char			*ops_array[11];
 };
 
 struct s_pushswap	*initpushswap(int ac, char **av, int *err);
 void				sort_update(struct s_stack *stack);
 void				calc_group(struct s_pushswap *ps);
 int					log_ceil(int n, int m);
+void				radix_sort(struct s_pushswap *p_s);
 
 #endif

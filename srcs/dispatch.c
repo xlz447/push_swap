@@ -12,30 +12,30 @@
 
 #include "checker.h"
 
-static void	init_const_array(struct s_checker *c_s)
+void	init_const_array(t_op_function	**op_func_array, char **ops_array)
 {
-	c_s->op_func_array[0] = &sa;
-	c_s->op_func_array[1] = &sb;
-	c_s->op_func_array[2] = &ss;
-	c_s->op_func_array[3] = &pa;
-	c_s->op_func_array[4] = &pb;
-	c_s->op_func_array[5] = &ra;
-	c_s->op_func_array[6] = &rb;
-	c_s->op_func_array[7] = &rr;
-	c_s->op_func_array[8] = &rra;
-	c_s->op_func_array[9] = &rrb;
-	c_s->op_func_array[10] = &rrr;
-	c_s->ops_array[0] = "sa";
-	c_s->ops_array[1] = "sb";
-	c_s->ops_array[2] = "ss";
-	c_s->ops_array[3] = "pa";
-	c_s->ops_array[4] = "pb";
-	c_s->ops_array[5] = "ra";
-	c_s->ops_array[6] = "rb";
-	c_s->ops_array[7] = "rr";
-	c_s->ops_array[8] = "rra";
-	c_s->ops_array[9] = "rrb";
-	c_s->ops_array[10] = "rrr";
+	op_func_array[0] = &sa;
+	op_func_array[1] = &sb;
+	op_func_array[2] = &ss;
+	op_func_array[3] = &pa;
+	op_func_array[4] = &pb;
+	op_func_array[5] = &ra;
+	op_func_array[6] = &rb;
+	op_func_array[7] = &rr;
+	op_func_array[8] = &rra;
+	op_func_array[9] = &rrb;
+	op_func_array[10] = &rrr;
+	ops_array[0] = "sa";
+	ops_array[1] = "sb";
+	ops_array[2] = "ss";
+	ops_array[3] = "pa";
+	ops_array[4] = "pb";
+	ops_array[5] = "ra";
+	ops_array[6] = "rb";
+	ops_array[7] = "rr";
+	ops_array[8] = "rra";
+	ops_array[9] = "rrb";
+	ops_array[10] = "rrr";
 }
 
 int			dispatch_checker(struct s_checker *c_s)
@@ -43,7 +43,7 @@ int			dispatch_checker(struct s_checker *c_s)
 	int		i;
 	char	*tmp;
 
-	init_const_array(c_s);
+	init_const_array(c_s->op_func_array, c_s->ops_array);
 	while (peekq(c_s->ins))
 	{
 		i = -1;

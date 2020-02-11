@@ -50,18 +50,26 @@ void			ss(struct s_stack *a, struct s_stack *b)
 
 void			pa(struct s_stack *a, struct s_stack *b)
 {
+	int tmp_index;
+
 	if (b->size)
 	{
+		tmp_index = b->top->index;
 		push(a, pop(b));
 		a->top->delta = 1;
+		a->top->index = tmp_index;
 	}
 }
 
 void			pb(struct s_stack *a, struct s_stack *b)
 {
+	int tmp_index;
+
 	if (a->size)
 	{
+		tmp_index = a->top->index;
 		push(b, pop(a));
 		b->top->delta = 1;
+		b->top->index = tmp_index;
 	}
 }

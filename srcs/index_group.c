@@ -12,18 +12,18 @@
 
 #include "push_swap.h"
 
-static void		p_index(struct s_stack *stack)
-{
-	struct s_snode	*tmp;
+// static void		p_index(struct s_stack *stack)
+// {
+// 	struct s_snode	*tmp;
 
-	tmp = stack->top;
-	ft_printf("\n");
-	while (tmp)
-	{
-		ft_printf(" %d\n", tmp->index);
-		tmp = tmp->next;
-	}
-}
+// 	tmp = stack->top;
+// 	ft_printf("\n");
+// 	while (tmp)
+// 	{
+// 		ft_printf(" %d\n", tmp->index);
+// 		tmp = tmp->next;
+// 	}
+// }
 
 void			sort_update(struct s_stack *stack)
 {
@@ -51,7 +51,7 @@ void			sort_update(struct s_stack *stack)
 		over = min_val;
 		min_node->index = i;
 	}
-	p_index(stack);
+	// p_index(stack);
 }
 
 int				log_ceil(int n, int m)
