@@ -36,6 +36,7 @@ void			ex_and_store_instructions(struct s_pushswap *p_s, char *ins)
 {
 	dispatch_one(p_s, ins);
 	enqueue(p_s->ins, ins);
+	ft_printf("%s\n", ins);
 }
 
 static void		put_two_groups(struct s_pushswap *p_s, int dir, int top, int bot)
@@ -103,7 +104,7 @@ void	update_group(struct s_pushswap *p_s, int flips, int cur_flip)
 		// ft_printf("tmp->index:%d group:%d\n",tmp->index, tmp->group );
 		tmp = tmp->next;
 	}
-	ft_printf("\n");
+	// ft_printf("\n");
 }
 
 void	set_order_helper(struct s_pushswap *p_s, int i, int j)
@@ -168,8 +169,8 @@ void			radix_sort(struct s_pushswap *p_s)
 	flips = log_ceil(p_s->a->size, p_s->gsize);
 	set_order_tree(p_s, flips);
 	j = -1;
-	while(p_s->order[++j])
-		ft_printf("%s\n", p_s->order[j]);
+	// while(p_s->order[++j])
+	// 	ft_printf("%s\n", p_s->order[j]);
 	cur_flip = 0;
 	while (++cur_flip <= flips)
 	{

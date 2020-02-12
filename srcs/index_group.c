@@ -79,6 +79,6 @@ void			calc_group(struct s_pushswap *p_s)
 	four = 2.0 * n * log_ceil(n, 4) + n * (log_ceil(n, 4) % 2);
 	five = 2.2 * n * log_ceil(n, 5) + n * (log_ceil(n, 5) % 2);
 	p_s->gsize = (four < five) ? 4 : 5;
-	printf("|four=%f|five=%f|\n", four, five);
-	ft_printf("Group Size = %d\n", p_s->gsize);
+	// printf("|four=%f|five=%f|\n", four, five);
+	// ft_printf("Group Size = %d\n", p_s->gsize);
 }

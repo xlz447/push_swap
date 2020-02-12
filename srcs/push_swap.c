@@ -37,12 +37,12 @@ int				main(int ac, char **av)
 		exit(0);
 	if (!(p_s = initpushswap(ac, av, &err)) || err == -1)
 		clearp_exit(p_s, 1);
-	print_stack(1, p_s->a, p_s->b);
+	// print_stack(1, p_s->a, p_s->b);
 	sort_update(p_s->a);
 	calc_group(p_s);
 	radix_sort(p_s);
 	// clearp_exit(p_s, 0);
-	print_stack(1, p_s->a, p_s->b);
+	// print_stack(1, p_s->a, p_s->b);
 
 	return (0);
 }
