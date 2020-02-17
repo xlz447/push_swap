@@ -12,7 +12,19 @@
 
 #include "checker.h"
 
-void	init_const_array(t_op_function	**op_func_array, char **ops_array)
+int		expo(int b, int p)
+{
+	int		i;
+	int		out;
+
+	i = -1;
+	out = 1;
+	while (++i < p)
+		out *= b;
+	return (out);
+}
+
+void	init_const_array(t_op_function **op_func_array, char **ops_array)
 {
 	op_func_array[0] = &sa;
 	op_func_array[1] = &sb;
@@ -38,7 +50,7 @@ void	init_const_array(t_op_function	**op_func_array, char **ops_array)
 	ops_array[10] = "rrr";
 }
 
-int			dispatch_checker(struct s_checker *c_s)
+int		dispatch_checker(struct s_checker *c_s)
 {
 	int		i;
 	char	*tmp;

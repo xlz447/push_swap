@@ -80,7 +80,8 @@ void				rrb(struct s_stack *a, struct s_stack *b);
 void				rrr(struct s_stack *a, struct s_stack *b);
 
 struct s_checker	*initchecker(int ac, char **av, int *err);
-void				init_const_array(t_op_function	**op_func_array, char **ops_array);
+void				init_const_array(t_op_function	**op_func_array,
+										char **ops_array);
 int					dispatch_checker(struct s_checker *c_s);
 
 void				print_stack(int c, struct s_stack *a, struct s_stack *b);

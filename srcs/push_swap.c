@@ -12,6 +12,46 @@
 
 #include "push_swap.h"
 
+static char		*condense(char *s1, char *s2)
+{
+	if ((!ft_strcmp(s1, "sa") && !ft_strcmp(s2, "sb")) ||
+		(!ft_strcmp(s1, "sb") && !ft_strcmp(s2, "sa")))
+		return ("ss");
+	else if ((!ft_strcmp(s1, "ra") && !ft_strcmp(s2, "rb")) ||
+			(!ft_strcmp(s1, "rb") && !ft_strcmp(s2, "ra")))
+		return ("rr");
+	else if ((!ft_strcmp(s1, "rra") && !ft_strcmp(s2, "rrb")) ||
+			(!ft_strcmp(s1, "rrb") && !ft_strcmp(s2, "rra")))
+		return ("rrr");
+	else
+		return (NULL);
+}
+
+static void		optimize_print(struct s_pushswap *p_s)
+{
+	char	*tmp;
+	char	*ins;
+
+	while (p_s->ins->first)
+	{
+		tmp = dequeue(p_s->ins);
+		if (tmp && peekq(p_s->ins))
+		{
+			ins = condense(tmp, peekq(p_s->ins));
+			if (!ins)
+				ft_printf("%s\n", tmp);
+			else
+			{
+				ft_printf("%s\n", ins);
+				dequeue(p_s->ins);
+			}
+			tmp = NULL;
+		}
+		if (tmp)
+			ft_printf("%s\n", tmp);
+	}
+}
+
 static void		clearp_exit(struct s_pushswap *p_s, int exit)
 {
 	if (p_s)
@@ -37,12 +77,9 @@ int				main(int ac, char **av)
 		exit(0);
 	if (!(p_s = initpushswap(ac, av, &err)) || err == -1)
 		clearp_exit(p_s, 1);
-	// print_stack(1, p_s->a, p_s->b);
 	sort_update(p_s->a);
 	calc_group(p_s);
 	radix_sort(p_s);
-	// clearp_exit(p_s, 0);
-	// print_stack(1, p_s->a, p_s->b);
-
+	optimize_print(p_s);
 	return (0);
 }

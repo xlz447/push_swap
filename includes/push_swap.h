@@ -31,5 +31,7 @@ void				sort_update(struct s_stack *stack);
 void				calc_group(struct s_pushswap *ps);
 int					log_ceil(int n, int m);
 void				radix_sort(struct s_pushswap *p_s);
+void				set_order_tree(struct s_pushswap *p_s, int flips);
+int					expo(int b, int p);
 
 #endif
