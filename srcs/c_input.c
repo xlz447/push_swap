@@ -41,24 +41,24 @@ static int				atoicheck(char *str, int *err)
 	return (result * negative);
 }
 
-static void				check_arg_flag(struct s_checker *c_s, char **av, int *i)
+static void				check_flags(struct s_checker *c_s, char **av, int *i)
 {
 	int ref;
 
-	while ((*i) > 0)
+	while (42)
 	{
 		ref = *i;
-		if (ft_strequ(av[*i], "-v"))
-		{
+		if ((*i) >= 0 && ft_strequ(av[*i], "-v") && --(*i) >= -1)
 			c_s->vflag = 1;
-			(*i)--;
-		}
-		if (ft_strequ(av[*i], "-c"))
-		{
+		if ((*i) >= 0 && ft_strequ(av[*i], "-c") && --(*i) >= -1)
 			c_s->cflag = 1;
-			(*i)--;
-		}
-		if (ref == *i)
+		if ((*i) >= 0 && ft_strequ(av[*i], "-f") && --(*i) >= -1)
+			c_s->fflag = 1;
+		if ((*i) >= 0 && ft_strequ(av[*i], "-a") && --(*i) >= -1)
+			c_s->fflag = 1;
+		if ((*i) >= 0 && ft_strequ(av[*i], "-s") && --(*i) >= -1)
+			c_s->fflag = 1;
+		if (ref == *i || (*i) < 0)
 			break ;
 	}
 }
@@ -115,18 +115,18 @@ struct s_checker		*initchecker(int ac, char **av, int *err)
 	if (NULL == (out = init_c_mem()))
 		return (NULL);
 	av = concat_input(ac, av);
-	i = 0;
-	while (av[i + 1])
-		i++;
+	i = ac - 2;
 	while (i >= 0)
 	{
+		check_flags(out, av, &i);
+		if (i < 0)
+			break ;
 		if (NULL == (n = malloc(sizeof(int))))
 			return (NULL);
-		check_arg_flag(out, av, &i);
 		*n = atoicheck(av[i--], err);
-		if (*err == -1)
-			break ;
-		if ((*err = push(out->a, n)) == -1)
+		if (-1 == *err)
+			free(n);
+		if (-1 == *err || -1 == push(out->a, n))
 			break ;
 	}
 	ft_free_2d((void**)av);

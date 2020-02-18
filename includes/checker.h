@@ -51,6 +51,9 @@ struct				s_checker {
 	struct s_queue	*ins;
 	int				vflag;
 	int				cflag;
+	int				fflag;
+	int				aflag;
+	int				sflag;
 	t_op_function	*op_func_array[11];
 	char			*ops_array[11];
 };

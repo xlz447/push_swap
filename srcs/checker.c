@@ -69,7 +69,7 @@ int				main(int ac, char **av)
 
 	if (ac < 2 && (err = 1))
 		exit(0);
-	if (!(c_s = initchecker(ac, av, &err)) || err == -1 ||
+	if (!(c_s = initchecker(ac, av, &err)) || err == -1 || !c_s->a->size ||
 		(readins(c_s) < 0) || (dispatch_checker(c_s) < 0))
 		clearc_exit(c_s, 1);
 	check_result(c_s);
