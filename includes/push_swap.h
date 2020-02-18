@@ -29,9 +29,11 @@ struct				s_pushswap {
 struct s_pushswap	*initpushswap(int ac, char **av, int *err);
 void				sort_update(struct s_stack *stack);
 void				calc_group(struct s_pushswap *ps);
-int					log_ceil(int n, int m);
-void				radix_sort(struct s_pushswap *p_s);
 void				set_order_tree(struct s_pushswap *p_s, int flips);
+void				radix_sort(struct s_pushswap *p_s);
+void				sort_small(struct s_pushswap *p_s);
+void				execute_enqueue(struct s_pushswap *p_s, char *ins);
+int					log_ceil(int n, int m);
 int					expo(int b, int p);
 
 #endif

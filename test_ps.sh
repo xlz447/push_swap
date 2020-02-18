@@ -1,6 +1,6 @@
 # !/bin/bash
 
-make re
+make
 
 echo "Start Test"
 

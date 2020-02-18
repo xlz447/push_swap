@@ -1,5 +1,9 @@
 make
  echo "" > test_result
+ARG=`ruby -e "puts (0..3).to_a.shuffle.join(' ')"`
+echo "ARGUMENTS:" $ARG >> test_result
+./push_swap $ARG | ./checker $ARG >> test_result
+
 ARG=`ruby -e "puts (0..4).to_a.shuffle.join(' ')"`
 echo "ARGUMENTS:" $ARG >> test_result
 ./push_swap $ARG | ./checker $ARG >> test_result

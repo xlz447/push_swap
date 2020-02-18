@@ -68,6 +68,23 @@ static void		clearp_exit(struct s_pushswap *p_s, int exit)
 		ft_errorexit("Error");
 }
 
+static int		check_result(struct s_pushswap *p_s)
+{
+	struct s_snode *tmp;
+
+	if (p_s->b->size != 0)
+		return (1);
+	tmp = p_s->a->top;
+	while (tmp->next)
+	{
+		if (*tmp->content < *tmp->next->content)
+			tmp = tmp->next;
+		else
+			return (1);
+	}
+	return (0);
+}
+
 int				main(int ac, char **av)
 {
 	struct s_pushswap	*p_s;
@@ -79,7 +96,13 @@ int				main(int ac, char **av)
 		clearp_exit(p_s, 1);
 	sort_update(p_s->a);
 	calc_group(p_s);
-	radix_sort(p_s);
+	if (check_result(p_s))
+	{
+		if (p_s->a->size <= 5)
+			sort_small(p_s);
+		else
+			radix_sort(p_s);
+	}
 	optimize_print(p_s);
 	return (0);
 }
