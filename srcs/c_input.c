@@ -55,9 +55,9 @@ static void				check_flags(struct s_checker *c_s, char **av, int *i)
 		if ((*i) >= 0 && ft_strequ(av[*i], "-f") && --(*i) >= -1)
 			c_s->fflag = 1;
 		if ((*i) >= 0 && ft_strequ(av[*i], "-a") && --(*i) >= -1)
-			c_s->fflag = 1;
+			c_s->aflag = 1;
 		if ((*i) >= 0 && ft_strequ(av[*i], "-s") && --(*i) >= -1)
-			c_s->fflag = 1;
+			c_s->sflag = 1;
 		if (ref == *i || (*i) < 0)
 			break ;
 	}
@@ -101,6 +101,11 @@ static struct s_checker	*init_c_mem(void)
 	out->a = inits();
 	out->b = inits();
 	out->ins = initq();
+	out->vflag = 0;
+	out->cflag = 0;
+	out->fflag = 0;
+	out->aflag = 0;
+	out->sflag = 0;
 	return (out);
 }
 

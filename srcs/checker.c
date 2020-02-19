@@ -28,7 +28,7 @@ static void		clearc_exit(struct s_checker *c_s, int exit)
 		ft_errorexit("Error");
 }
 
-static int		check_result(struct s_checker *c_s)
+static int		checker_result(struct s_checker *c_s)
 {
 	struct s_snode *tmp;
 
@@ -51,10 +51,12 @@ static int		open_file(void)
 	int		rtn;
 
 	ft_printf("Enter a filename, followed by the Enter Key.\n");
+	filename = NULL;
 	rtn = get_next_line(0, &filename);
-	if (rtn > 0)
+	if (rtn >= 0)
 		rtn = open(filename, O_RDONLY);
-	free(filename);
+	if (filename)
+		free(filename);
 	return (rtn);
 }
 
@@ -84,10 +86,15 @@ int				main(int ac, char **av)
 
 	if (ac < 2 && (err = 1))
 		exit(0);
-	if (!(c_s = initchecker(ac, av, &err)) || err == -1 || !c_s->a->size ||
-		(read_ins(c_s) < 0) || (dispatch_checker(c_s) < 0))
+	if (!(c_s = initchecker(ac, av, &err)) || err == -1 ||
+		!c_s->a->size || (read_ins(c_s) < 0))
 		clearc_exit(c_s, 1);
-	check_result(c_s);
-	clearc_exit(c_s, 0);
+	if (c_s->aflag || c_s->sflag)
+		animation(c_s);
+	else
+		err = dispatch_checker(c_s);
+	if (!err)
+		checker_result(c_s);
+	clearc_exit(c_s, err);
 	return (0);
 }

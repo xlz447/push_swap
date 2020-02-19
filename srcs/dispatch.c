@@ -70,9 +70,11 @@ int		dispatch_checker(struct s_checker *c_s)
 		if (i == 11)
 			return (-1);
 		tmp = dequeue(c_s->ins);
-		free(tmp);
-		if (c_s->vflag == 1)
+		if (c_s->vflag)
+			ft_printf("Performing %s\n", tmp);
+		if (c_s->vflag)
 			print_stack(c_s->cflag, c_s->a, c_s->b);
+		free(tmp);
 	}
 	return (0);
 }

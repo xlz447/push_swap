@@ -20,6 +20,7 @@
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
+# include "mlx.h"
 
 struct				s_qnode {
 	char			*content;
@@ -46,6 +47,12 @@ struct				s_stack {
 };
 
 typedef	void		t_op_function(struct s_stack *a, struct s_stack *b);
+
+struct				s_mlx {
+	void		*mlx;
+	void		*win;
+	void		*img;
+};
 
 struct				s_checker {
 	struct s_stack	*a;
@@ -88,6 +95,6 @@ struct s_checker	*initchecker(int ac, char **av, int *err);
 void				init_const_array(t_op_function	**op_func_array,
 										char **ops_array);
 int					dispatch_checker(struct s_checker *c_s);
-
 void				print_stack(int c, struct s_stack *a, struct s_stack *b);
+void				animation(struct s_checker *c_s);
 #endif
