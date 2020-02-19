@@ -96,13 +96,11 @@ static struct s_checker	*init_c_mem(void)
 {
 	struct s_checker	*out;
 
-	if (NULL == (out = malloc(sizeof(struct s_checker))))
+	if (NULL == (out = ft_memalloc(sizeof(struct s_checker))))
 		return (NULL);
 	out->a = inits();
 	out->b = inits();
 	out->ins = initq();
-	out->vflag = 0;
-	out->cflag = 0;
 	return (out);
 }
 

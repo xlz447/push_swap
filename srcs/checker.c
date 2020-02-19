@@ -45,12 +45,27 @@ static int		check_result(struct s_checker *c_s)
 	return (ft_printf("OK\n"));
 }
 
-static int		readins(struct s_checker *c_s)
+static int		open_file(void)
+{
+	char	*filename;
+	int		rtn;
+
+	ft_printf("Enter a filename, followed by the Enter Key.\n");
+	rtn = get_next_line(0, &filename);
+	if (rtn > 0)
+		rtn = open(filename, O_RDONLY);
+	free(filename);
+	return (rtn);
+}
+
+static int		read_ins(struct s_checker *c_s)
 {
 	char	*line;
 	int		rtn;
+	int		fd;
 
-	while ((rtn = get_next_line(0, &line)) > 0)
+	fd = (c_s->fflag) ? open_file() : 0;
+	while ((rtn = get_next_line(fd, &line)) > 0)
 	{
 		if (enqueue(c_s->ins, line) < -1)
 		{
@@ -70,7 +85,7 @@ int				main(int ac, char **av)
 	if (ac < 2 && (err = 1))
 		exit(0);
 	if (!(c_s = initchecker(ac, av, &err)) || err == -1 || !c_s->a->size ||
-		(readins(c_s) < 0) || (dispatch_checker(c_s) < 0))
+		(read_ins(c_s) < 0) || (dispatch_checker(c_s) < 0))
 		clearc_exit(c_s, 1);
 	check_result(c_s);
 	clearc_exit(c_s, 0);

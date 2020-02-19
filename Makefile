@@ -25,6 +25,7 @@ SRC_PATH	=	./srcs/
 INC_PATH	=	./includes/
 OBJ_PATH	=	./obj/
 LFT_PATH	=	./libftprintf/
+MLX_PATH 	= 	./minilibx_macos/
 
 P_SRC		=	$(addprefix $(SRC_PATH),$(P_SRC_NAME))
 C_SRC		=	$(addprefix $(SRC_PATH),$(C_SRC_NAME))
@@ -40,6 +41,7 @@ C_SRC_NAME	=	checker.c queue.c stack.c dispatch.c ops_1.c ops_2.c ops_3.c c_inpu
 
 all:
 	@make -C $(LFT_PATH)
+	@make -C $(MLX_PATH)
 	@make $(P_NAME)
 	@make $(C_NAME)
 
@@ -48,7 +50,7 @@ $(P_NAME): $(P_OBJ)
 	@echo "$(GREEN)PUSH_SWAP ✓ Push_swap ready$(NOC)"
 
 $(C_NAME): $(C_OBJ)
-	@$(CC) -o $(C_NAME) $(C_OBJ) -L $(LFT_PATH) -lftprintf
+	@$(CC) -o $(C_NAME) $(C_OBJ) -L $(LFT_PATH) -lftprintf -L $(MLX_PATH) -lmlx -framework OpenGL -framework AppKit
 	@echo "$(GREEN)CHECKER   ✓ Checker   ready$(NOC)"
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
@@ -57,12 +59,14 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 clean:
 	@make -C $(LFT_PATH) clean
+	@make -C $(MLX_PATH) clean
 	@rm -rf $(OBJ_PATH)
 	@echo "$(BLUE)PUSH_SWAP ✓ Removed .o files$(NOC)"
 	@echo "$(BLUE)CHECKER   ✓ Removed .o files$(NOC)"
 
 fclean: clean
 	@make -C $(LFT_PATH) fclean
+	@make -C $(MLX_PATH) fclean
 	@rm -f $(P_NAME)
 	@rm -f $(C_NAME)
 	@echo "$(RED)PUSH_SWAP ✓ Removed Push_swap executable$(NOC)"
