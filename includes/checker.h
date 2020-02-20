@@ -44,6 +44,7 @@ struct				s_snode {
 struct				s_stack {
 	struct s_snode	*top;
 	unsigned		size;
+	int				max;
 };
 
 typedef	void		t_op_function(struct s_stack *a, struct s_stack *b);
@@ -52,6 +53,13 @@ struct				s_mlx {
 	void		*mlx;
 	void		*win;
 	void		*img;
+	int			max_width;
+	int			width_per_value;
+	int			height_per_node;
+	int			bits_per_pixel;
+	int			size_line;
+	int			endian;
+	char		*addr;
 };
 
 struct				s_checker {

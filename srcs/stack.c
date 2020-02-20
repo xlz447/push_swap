@@ -20,6 +20,7 @@ struct s_stack	*inits(void)
 		return (NULL);
 	out->top = NULL;
 	out->size = 0;
+	out->max = -2147483648;
 	return (out);
 }
 
@@ -63,6 +64,8 @@ int				push(struct s_stack *stack, int *content)
 	new->group = -1;
 	stack->top = new;
 	stack->size++;
+	if (*content > stack->max)
+		stack->max = *content;
 	return (0);
 }
 
