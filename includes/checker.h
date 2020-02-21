@@ -56,7 +56,7 @@ struct				s_mlx {
 	int			max_width;
 	int			width_per_value;
 	int			height_per_node;
-	int			bits_per_pixel;
+	int			b_p_p;
 	int			size_line;
 	int			endian;
 	char		*addr;

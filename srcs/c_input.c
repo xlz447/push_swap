@@ -118,7 +118,9 @@ struct s_checker		*initchecker(int ac, char **av, int *err)
 	if (NULL == (out = init_c_mem()))
 		return (NULL);
 	av = concat_input(ac, av);
-	i = ac - 2;
+	i = 0;
+	while (av[i] && av[i + 1])
+		i++;
 	while (i >= 0)
 	{
 		check_flags(out, av, &i);
