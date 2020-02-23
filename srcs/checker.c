@@ -28,14 +28,14 @@ static void		clearc_exit(struct s_checker *c_s, int exit)
 		ft_errorexit("Error");
 }
 
-static int		checker_result(struct s_checker *c_s)
+int				checker_result(struct s_checker *c_s)
 {
 	struct s_snode *tmp;
 
 	if (c_s->b->size != 0)
 		return (ft_printf("KO\n"));
 	tmp = c_s->a->top;
-	while (tmp->next)
+	while (tmp && tmp->next)
 	{
 		if (*tmp->content < *tmp->next->content)
 			tmp = tmp->next;

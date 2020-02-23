@@ -17,10 +17,14 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <unistd.h>
+# include <pthread.h>
 # include "libft.h"
 # include "ft_printf.h"
 # include "get_next_line.h"
 # include "mlx.h"
+
+#define WIN_WIDTH 860
+#define WIN_HEIGHT 640
 
 struct				s_qnode {
 	char			*content;
@@ -54,8 +58,8 @@ struct				s_mlx {
 	void		*win;
 	void		*img;
 	int			max_width;
-	int			width_per_value;
-	int			height_per_node;
+	double		width_per_value;
+	double		height_per_node;
 	int			b_p_p;
 	int			size_line;
 	int			endian;
@@ -73,6 +77,11 @@ struct				s_checker {
 	int				sflag;
 	t_op_function	*op_func_array[11];
 	char			*ops_array[11];
+};
+
+struct				s_thread {
+	struct s_mlx		*m;
+	struct s_checker	*c_s;
 };
 
 struct s_queue		*initq();
@@ -100,6 +109,7 @@ void				rrb(struct s_stack *a, struct s_stack *b);
 void				rrr(struct s_stack *a, struct s_stack *b);
 
 struct s_checker	*initchecker(int ac, char **av, int *err);
+int					checker_result(struct s_checker *c_s);
 void				init_const_array(t_op_function	**op_func_array,
 										char **ops_array);
 int					dispatch_checker(struct s_checker *c_s);

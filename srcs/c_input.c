@@ -55,7 +55,10 @@ static void				check_flags(struct s_checker *c_s, char **av, int *i)
 		if ((*i) >= 0 && ft_strequ(av[*i], "-f") && --(*i) >= -1)
 			c_s->fflag = 1;
 		if ((*i) >= 0 && ft_strequ(av[*i], "-a") && --(*i) >= -1)
+		{
 			c_s->aflag = 1;
+			c_s->sflag = 0;
+		}
 		if ((*i) >= 0 && ft_strequ(av[*i], "-s") && --(*i) >= -1)
 			c_s->sflag = 1;
 		if (ref == *i || (*i) < 0)
