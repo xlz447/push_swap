@@ -55,7 +55,7 @@ $(C_NAME): $(C_OBJ)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir -p $(OBJ_PATH)
-	@$(CC) $(CC_FLAGS) $(INC) -o $@ -c $<
+	@$(CC) $(CC_FLAGS) $(INC) -I $(MLX_PATH) -o $@ -c $<
 
 clean:
 	@make -C $(LFT_PATH) clean

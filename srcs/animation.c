@@ -40,17 +40,20 @@ void		draw_stack(struct s_checker *c_s, struct s_mlx *m)
 
 	t1 = c_s->a->top;
 	t2 = c_s->b->top;
-	i = -1; 
+	i = -1;
 	while (++i < (H - 40) * W)
 	{
-		n = i / (W * m->h_p_n);
-		if (i / W >= (int)(m->h_p_n * n) && i / W < (int)(m->h_p_n * (n + 1)) &&
-		((i % W > 20 && t1 && i % W < 20 + m->w_p_v * *t1->content) ||
-		(i % W > W / 2 + 10 && t2 && i % W < m->w_p_v * *t2->content +
+		n = i / (W * m->height_p_node);
+		if (i / W >= (int)(m->height_p_node * n) &&
+		i / W < (int)(m->height_p_node * (n + 1)) &&
+		((i % W > 20 && t1 && i % W < 20 + m->width_p_value * *t1->content) ||
+		(i % W > W / 2 + 10 && t2 && i % W < m->width_p_value * *t2->content +
 		W / 2 + 10)))
 			((int*)m->addr)[i] = 0xffdab9;
-		t1 = (i && t1 && (i % (int)(W * m->h_p_n) == 0)) ? t1->next : t1;
-		t2 = (i && t2 && (i % (int)(W * m->h_p_n) == 0)) ? t2->next : t2;
+		if (i && t1 && (i % (int)(W * m->height_p_node) == 0))
+			t1 = t1->next;
+		if (i && t2 && (i % (int)(W * m->height_p_node) == 0))
+			t2 = t2->next;
 	}
 }
 
@@ -63,7 +66,7 @@ static void	*timed_execute(void *args)
 	m = ((struct s_thread *)args)->m;
 	while (peekq(c_s->ins))
 	{
-		usleep(5000);
+		usleep(100000);
 		execute_one(c_s);
 		ft_bzero(m->addr, W * (H - 40) * m->b_p_p / 8);
 		draw_stack(c_s, m);
@@ -105,8 +108,8 @@ void		animation(struct s_checker *c_s)
 	m.win = mlx_new_window(m.mlx, W, H, "Checker");
 	m.img = mlx_new_image(m.mlx, W, H - 40);
 	m.max_width = (W - 60) / 2;
-	m.w_p_v = m.max_width / (double)c_s->a->max;
-	m.h_p_n = (H - 40) / (double)c_s->a->size;
+	m.width_p_value = m.max_width / (double)c_s->a->max;
+	m.height_p_node = (H - 40) / (double)c_s->a->size;
 	m.addr = mlx_get_data_addr(m.img, &m.b_p_p, &m.size_line, &m.endian);
 	draw_stack(c_s, &m);
 	mlx_key_hook(m.win, key_handler, (void*[2]){c_s, &m});

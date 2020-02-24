@@ -23,8 +23,8 @@
 # include "get_next_line.h"
 # include "mlx.h"
 
-#define W 860
-#define H 640
+# define W 860
+# define H 640
 
 struct				s_qnode {
 	char			*content;
@@ -58,8 +58,8 @@ struct				s_mlx {
 	void		*win;
 	void		*img;
 	int			max_width;
-	double		w_p_v;
-	double		h_p_n;
+	double		width_p_value;
+	double		height_p_node;
 	int			b_p_p;
 	int			size_line;
 	int			endian;
