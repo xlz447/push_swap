@@ -54,16 +54,18 @@ struct				s_stack {
 typedef	void		t_op_function(struct s_stack *a, struct s_stack *b);
 
 struct				s_mlx {
-	void		*mlx;
-	void		*win;
-	void		*img;
-	int			max_width;
-	double		width_p_value;
-	double		height_p_node;
-	int			b_p_p;
-	int			size_line;
-	int			endian;
-	char		*addr;
+	void			*mlx;
+	void			*win;
+	void			*img;
+	int				max_width;
+	double			width_p_value;
+	double			height_p_node;
+	int				b_p_p;
+	int				size_line;
+	int				endian;
+	char			*addr;
+	pthread_mutex_t lock;
+	int				pause;
 };
 
 struct				s_checker {

@@ -42,7 +42,7 @@ int				checker_result(struct s_checker *c_s)
 		else
 			return (ft_printf("KO\n"));
 	}
-	return (ft_printf("OK\n"));
+	return (ft_printf("OK\n") - 3);
 }
 
 static int		open_file(void)
