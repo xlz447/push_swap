@@ -12,7 +12,7 @@
 
 #include "checker.h"
 
-static void	draw_stack(struct s_checker *c_s, struct s_mlx *m, int color)
+static void	draw(struct s_checker *c_s, struct s_mlx *m, int color)
 {
 	double			n;
 	int				i;
@@ -38,7 +38,7 @@ static void	draw_stack(struct s_checker *c_s, struct s_mlx *m, int color)
 	}
 }
 
-static void	execute_one(struct s_checker *c_s)
+static void	execute_one(struct s_checker *c_s, struct s_mlx *m)
 {
 	int		i;
 	char	*tmp;
@@ -57,6 +57,9 @@ static void	execute_one(struct s_checker *c_s)
 		exit(ft_printf("Error\n"));
 	tmp = dequeue(c_s->ins);
 	free(tmp);
+	ft_bzero(m->addr, W * (H - 40) * m->b_p_p / 8);
+	draw(c_s, m, 0xffdab9);
+	mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 20);
 }
 
 static void	*timed_execute(void *args)
@@ -76,15 +79,12 @@ static void	*timed_execute(void *args)
 		}
 		pthread_mutex_unlock(&m->lock);
 		usleep(100000);
-		execute_one(c_s);
-		ft_bzero(m->addr, W * (H - 40) * m->b_p_p / 8);
-		draw_stack(c_s, m, 0xffdab9);
-		if (!peekq(c_s->ins))
-			checker_result(c_s) ? draw_stack(c_s, m, 0xee0000) :
-			draw_stack(c_s, m, 0x90ee90);
-		mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 20);
+		execute_one(c_s, m);
 		mlx_do_sync(m->mlx);
 	}
+	checker_result(c_s) ? draw(c_s, m, RED) : draw(c_s, m, GREEN);
+	mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 20);
+	mlx_do_sync(m->mlx);
 	return (NULL);
 }
 
@@ -96,11 +96,7 @@ static int	key_handler(int k, void *in[2])
 	c_s = (struct s_checker *)in[0];
 	m = (struct s_mlx *)in[1];
 	if (k == 53)
-	{
-		if (peekq(c_s->ins))
-			exit(checker_result(c_s));
 		exit(0);
-	}
 	else if (k == 1)
 	{
 		pthread_mutex_lock(&m->lock);
@@ -109,10 +105,13 @@ static int	key_handler(int k, void *in[2])
 	}
 	else if (k == 49 && c_s->sflag)
 	{
-		execute_one(c_s);
-		ft_bzero(m->addr, W * (H - 40) * m->b_p_p / 8);
-		draw_stack(c_s, m, 0xffdab9);
-		mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 20);
+		if (peekq(c_s->ins))
+			execute_one(c_s, m);
+		if (!peekq(c_s->ins) && !(c_s->sflag = 0))
+		{
+			checker_result(c_s) ? draw(c_s, m, RED) : draw(c_s, m, GREEN);
+			mlx_put_image_to_window(m->mlx, m->win, m->img, 0, 20);
+		}
 	}
 	return (0);
 }
@@ -134,12 +133,12 @@ void		animation(struct s_checker *c_s)
 	m.height_p_node = (H - 40) / (double)c_s->a->size;
 	m.addr = mlx_get_data_addr(m.img, &m.b_p_p, &m.size_line, &m.endian);
 	m.pause = 0;
-	pthread_mutex_init(&m.lock, NULL);
-	draw_stack(c_s, &m, 0xffdab9);
-	mlx_key_hook(m.win, key_handler, (void*[2]){c_s, &m});
+	draw(c_s, &m, 0xffdab9);
+	if (!peekq(c_s->ins) && !(c_s->sflag = 0))
+		checker_result(c_s) ? draw(c_s, &m, RED) : draw(c_s, &m, GREEN);
 	mlx_put_image_to_window(m.mlx, m.win, m.img, 0, 20);
-	if (!peekq(c_s->ins))
-		checker_result(c_s);
+	pthread_mutex_init(&m.lock, NULL);
+	mlx_key_hook(m.win, key_handler, (void*[2]){c_s, &m});
 	if (c_s->aflag && !pthread_attr_init(&attr))
 		pthread_create(&thread, &attr, &timed_execute, &args);
 	mlx_loop(m.mlx);

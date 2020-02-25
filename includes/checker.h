@@ -25,6 +25,8 @@
 
 # define W 860
 # define H 640
+# define RED 0xff4d4d
+# define GREEN 0x90ee90
 
 struct				s_qnode {
 	char			*content;
