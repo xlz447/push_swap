@@ -100,10 +100,11 @@ struct s_pushswap			*initpushswap(int ac, char **av, int *err)
 		if (NULL == (n = malloc(sizeof(int))))
 			return (NULL);
 		*n = atoicheck(av[i--], err);
-		if (*err == -1)
+		if (-1 == *err || (*err = push(out->a, n)) == -1)
+		{
+			free(n);
 			break ;
-		if ((*err = push(out->a, n)) == -1)
-			break ;
+		}
 	}
 	ft_free_2d((void**)av);
 	return (out);

@@ -41,7 +41,7 @@ static int				atoicheck(char *str, int *err)
 	return (result * negative);
 }
 
-static void				check_flags(struct s_checker *c_s, char **av, int *i)
+static int				check_flags(struct s_checker *c_s, char **av, int *i)
 {
 	int ref;
 
@@ -64,6 +64,7 @@ static void				check_flags(struct s_checker *c_s, char **av, int *i)
 		if (ref == *i || (*i) < 0)
 			break ;
 	}
+	return (*i);
 }
 
 static char				**concat_input(int ac, char **av)
@@ -126,16 +127,16 @@ struct s_checker		*initchecker(int ac, char **av, int *err)
 		i++;
 	while (i >= 0)
 	{
-		check_flags(out, av, &i);
-		if (i < 0)
+		if (check_flags(out, av, &i) < 0)
 			break ;
 		if (NULL == (n = malloc(sizeof(int))))
 			return (NULL);
 		*n = atoicheck(av[i--], err);
-		if (-1 == *err)
+		if (-1 == *err || (*err = push(out->a, n)) == -1)
+		{
 			free(n);
-		if (-1 == *err || -1 == push(out->a, n))
 			break ;
+		}
 	}
 	ft_free_2d((void**)av);
 	return (out);
